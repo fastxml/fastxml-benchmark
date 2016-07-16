@@ -52,13 +52,13 @@ public class FastXmlPerfTest {
          performance ==> 149.2147273845501
      */
     public static void main(String[] args) {
-        test("../../../../address-small.xml");
-        test("../../../../address-middle.xml");
-        test("../../../../address-big.xml");
+        test("address-small.xml");
+        test("address-middle.xml");
+        test("address-big.xml");
     }
     public static void test(String fileName){
         try {
-            byte[] ba = FileLoaderUtils.loadClasspathFile("address-big.xml");
+            byte[] ba = FileLoaderUtils.loadClasspathFile(fileName);
             int fl = ba.length;
 
             int total;
