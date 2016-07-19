@@ -1,14 +1,12 @@
-package org.fastxml.benchmark.performance;
+package com.github.fastxml.benchmark.performance;
 
-import org.fastxml.FastXmlFactory;
-import org.fastxml.FastXmlParser;
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
-import org.fastxml.exception.NumberFormatException;
-import org.fastxml.exception.ParseException;
-
-import java.io.InputStream;
+import com.github.fastxml.FastXmlFactory;
+import com.github.fastxml.FastXmlParser;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
+import com.github.fastxml.exception.NumberFormatException;
+import com.github.fastxml.exception.ParseException;
 
 /**
  * Created by weager on 2016/07/07.
@@ -84,15 +82,15 @@ public class FastXmlPerfTest {
                 total = 5;
             System.out.println("total is " + total);
             System.out.println("file length: " + fl);
-
-            parseXml2PersionObject(ba);
+            FastXmlParser parser = FastXmlFactory.newInstance(ba);
+            parseXml2PersionObject(parser, ba);
 
             long lt = 0;
             for (int j = 0;j<10;j++){
                 long a = System.currentTimeMillis();
                 for(int i=0;i<total;i++)
                 {
-                    parseXml2PersionObject(ba);
+                    parseXml2PersionObject(parser, ba);
                 }
                 long l2 = System.currentTimeMillis();
                 lt = lt + (l2 - a);
@@ -107,8 +105,8 @@ public class FastXmlPerfTest {
         }
     }
 
-    public static void parseXml2PersionObject(byte[] ba) throws ParseException, NumberFormatException {
-        FastXmlParser parser = FastXmlFactory.newInstance(ba);
+    public static void parseXml2PersionObject(FastXmlParser parser, byte[] ba) throws ParseException, NumberFormatException {
+        parser.setInput(ba, null);
         int event = 0;
         if (parser.next() == FastXmlParser.START_DOCUMENT && parser.next() == FastXmlParser.START_TAG && parser.isMatch(database)) {
             Person p = new Person();
@@ -117,7 +115,7 @@ public class FastXmlPerfTest {
                     p.setId(parser.getLong());
                 }
                 if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(name) && parser.next() == FastXmlParser.TEXT) {
-                    p.setName(parser.getString(true));
+                    p.setName(parser.getStringWithDecoding());
                     parser.next();
                 }
                 if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(email) && parser.next() == FastXmlParser.TEXT) {
@@ -147,7 +145,7 @@ public class FastXmlPerfTest {
                     }
                     if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(line1)) {
                         parser.next();
-                        p.setLine1(parser.getString(true));
+                        p.setLine1(parser.getStringWithDecoding());
                         parser.next();
                     }
                     if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(line2)) {

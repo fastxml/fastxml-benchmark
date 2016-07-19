@@ -1,14 +1,13 @@
-package org.fastxml.benchmark.memory;
+package com.github.fastxml.benchmark.memory;
 
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 /**
  * Created by weager on 2016/07/07.

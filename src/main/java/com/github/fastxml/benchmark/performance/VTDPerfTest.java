@@ -1,14 +1,12 @@
-package org.fastxml.benchmark.performance;
+package com.github.fastxml.benchmark.performance;
 
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
 import com.ximpleware.NavException;
 import com.ximpleware.ParseException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
-
-import java.io.InputStream;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 
 /**
  * Created by weager on 2016/07/07.

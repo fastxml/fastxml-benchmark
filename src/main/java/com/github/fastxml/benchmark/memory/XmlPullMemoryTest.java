@@ -1,78 +1,40 @@
-package org.fastxml.benchmark.performance;
+package com.github.fastxml.benchmark.memory;
 
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
- * Created by weager on 2016/07/09.
+ * Created by weager on 2016/07/11.
  */
-public class XmlPullPerfTest {
+public class XmlPullMemoryTest {
+    static Runtime rt;
 
     /**
      VM options:
         -server -Xms128m
 
      OUTPUT:
-         total is 40000
-         file length: 1515
-         average parsing time ==> 0.0125675
-         performance ==> 115.12482783708914
-
-
-         total is 1200
-         file length: 41292
-         average parsing time ==> 0.31741667
-         performance ==> 124.35511538856908
-
-
-         total is 5
          file length: 17367391
-         average parsing time ==> 143.95999
-         performance ==> 115.17965743869999
+         Memory Use: 35.03701 MB.
+         Multiplying factor: 2.1153994
+         Time Use: 370
      */
     public static void main(String[] args) {
-        test("address-small.xml");
-        test("address-middle.xml");
-        test("address-big.xml");
-    }
-    public static void test(String fileName){
         try {
-            byte[] ba = FileLoaderUtils.loadClasspathFile(fileName);
-            int fl = ba.length;
-
-            int total;
-            if (fl < 1000)
-                total = 80000;
-            else if (fl < 3000)
-                total = 40000;
-            else if (fl < 6000)
-                total = 8000;
-            else if (fl < 15000)
-                total = 3200;
-            else if (fl < 30000)
-                total = 2000;
-            else if (fl < 60000)
-                total = 1200;
-            else if (fl < 120000)
-                total = 300;
-            else if (fl < 500000)
-                total = 100;
-            else if (fl < 2000000)
-                total = 40;
-            else
-                total = 5;
-            System.out.println("total is " + total);
-            System.out.println("file length: " + fl);
-
+            rt = Runtime.getRuntime();
+            byte[] ba = FileLoaderUtils.loadClasspathFile("address-big.xml");
+            int length = ba.length;
+            System.out.println("file length: " + length);
             ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+            long startMem = rt.totalMemory() - rt.freeMemory();
+            long startTime = System.currentTimeMillis();
 
             XmlPullParserFactory factory = XmlPullParserFactory.newInstance(
                     System.getProperty(XmlPullParserFactory.PROPERTY_NAME), null);
@@ -83,20 +45,10 @@ public class XmlPullPerfTest {
 
             parseXml2PersionObject(xpp, bais);
 
-            long lt = 0;
-            for (int j = 0; j < 10; j++) {
-                long a = System.currentTimeMillis();
-                for (int i = 0; i < total; i++) {
-                    parseXml2PersionObject(xpp, bais);
-                }
-                long l2 = System.currentTimeMillis();
-                lt = lt + (l2 - a);
-            }
-            System.out.println(" average parsing time ==> " +
-                    ((float) (lt) / total / 10));
-            System.out.println(" performance ==> " +
-                    (((double) fl * 1000 * total) / ((lt / 10) * (1 << 20))) + "\n\n");
-
+            long endMem = rt.totalMemory() - rt.freeMemory();
+            System.out.println("Memory Use: " + ((float)endMem - startMem)/(1<<20) + " MB.");
+            System.out.println("Multiplying factor: " + ((float) endMem - startMem)/length );
+            System.out.println("Time Use: " + (System.currentTimeMillis() - startTime));
         } catch (Exception e) {
             System.out.println("exception ==> " + e);
         }

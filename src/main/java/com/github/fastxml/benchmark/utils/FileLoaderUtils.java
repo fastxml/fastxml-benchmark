@@ -1,4 +1,4 @@
-package org.fastxml.benchmark.utils;
+package com.github.fastxml.benchmark.utils;
 
 import java.io.IOException;
 import java.io.InputStream;

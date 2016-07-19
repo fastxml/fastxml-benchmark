@@ -1,15 +1,14 @@
-package org.fastxml.benchmark.memory;
+package com.github.fastxml.benchmark.memory;
 
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
 import com.ximpleware.NavException;
 import com.ximpleware.ParseException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by weager on 2016/07/07.

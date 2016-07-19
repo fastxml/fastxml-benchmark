@@ -7,8 +7,8 @@ This report show how well FastXml fares against some of the well-known XML parse
 ## Hardware
 
 * MacBook Pro
-* CPU: 2.9GHz dual-core Intel Core i5, Turbo Boost up to 3.3GHz
-* Memory = 8GB 1866MHz LPDDR3
+* CPU: 2.5GHz
+* Memory = 16GB 1866MHz LPDDR3
 * L1 cache = 32768B
 * L2 cache = 262144B
 * L3 cache = 6291456B
@@ -65,5 +65,5 @@ _Multiplying factor = (endMemory - startMemory)/fileLength_
 | javax.xml.parsers.DocumentBuilder | 144.78         | 8.74               |
 | VTD-XML                           | 32.23          | 1.95               |
 | XmlPull                           | 35.04          | 2.12               |
-| **FastXml**                       | 1.86           | 0.11               |
+| **FastXml**                       | 6.86           | 0.41               |
 

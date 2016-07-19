@@ -1,4 +1,4 @@
-package org.fastxml.benchmark.model;
+package com.github.fastxml.benchmark.model;
 
 /**
  * Created by weager on 2016/07/08.

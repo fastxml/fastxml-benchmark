@@ -1,10 +1,10 @@
-package org.fastxml.benchmark.memory;
+package com.github.fastxml.benchmark.memory;
 
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
-import org.fastxml.FastXmlFactory;
-import org.fastxml.FastXmlParser;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
+import com.github.fastxml.FastXmlFactory;
+import com.github.fastxml.FastXmlParser;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 
 import java.io.InputStream;
 
@@ -55,7 +55,7 @@ public class FastXmlMemoryTest {
                         p.setId(parser.getLong());
                     }
                     if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(name) && parser.next() == FastXmlParser.TEXT) {
-                        p.setName(parser.getString(true));
+                        p.setName(parser.getStringWithDecoding());
                         parser.next();
                     }
                     if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(email) && parser.next() == FastXmlParser.TEXT) {
@@ -85,7 +85,7 @@ public class FastXmlMemoryTest {
                         }
                         if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(line1)) {
                             parser.next();
-                            p.setLine1(parser.getString(true));
+                            p.setLine1(parser.getStringWithDecoding());
                             parser.next();
                         }
                         if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(line2)) {

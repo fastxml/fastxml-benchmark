@@ -1,8 +1,8 @@
-package org.fastxml.benchmark.performance;
+package com.github.fastxml.benchmark.performance;
 
-import org.fastxml.benchmark.Debug;
-import org.fastxml.benchmark.model.Person;
-import org.fastxml.benchmark.utils.FileLoaderUtils;
+import com.github.fastxml.benchmark.Debug;
+import com.github.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -10,7 +10,6 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
 /**
  * Created by weager on 2016/07/07.
