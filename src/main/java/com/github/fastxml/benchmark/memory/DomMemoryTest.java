@@ -95,7 +95,7 @@ public class DomMemoryTest{
                                                 if("line1".equals(line.getNodeName())){
                                                     p.setLine1(line.getTextContent());
                                                 }else if("line2".equals(line.getNodeName())){
-                                                    p.setLine2(line.getTextContent());
+                                                    p.setLine2(line.getTextContent().trim());
                                                 }
                                             }
                                         }

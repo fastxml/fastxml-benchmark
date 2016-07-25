@@ -98,7 +98,7 @@ public class XmlPullMemoryTest {
                             xpp.nextTag();
                         }
                         if (xpp.nextTag() == XmlPullParser.START_TAG && "line2".equals(xpp.getName()) && xpp.nextToken() == XmlPullParser.TEXT) {
-                            p.setLine2(xpp.getText());
+                            p.setLine2(xpp.getText().trim());
                             xpp.nextTag();
                         }
                         xpp.nextTag();

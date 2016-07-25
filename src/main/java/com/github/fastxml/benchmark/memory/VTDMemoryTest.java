@@ -80,7 +80,7 @@ public class VTDMemoryTest {
                         if(nav.toElement(VTDNav.FC, "line1")){
                             p.setLine1(nav.toString(nav.getText()));
                             if(nav.toElement(VTDNav.NEXT_SIBLING, "line2")){
-                                p.setLine2(nav.toString(nav.getText()));
+                                p.setLine2(nav.toString(nav.getText()).trim());
                             }
                             nav.toElement(VTDNav.P);
                         }
