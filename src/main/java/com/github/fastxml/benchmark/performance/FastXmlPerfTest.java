@@ -28,26 +28,7 @@ public class FastXmlPerfTest {
     private final static byte[] line2 = "line2".getBytes();
 
     /**
-     VM options:
-        -server -Xms128m
-
-     OUTPUT:
-         total is 40000
-         file length: 1515
-         average parsing time ==> 0.009535
-         performance ==> 151.6867810346949
-
-
-         total is 1200
-         file length: 41292
-         average parsing time ==> 0.24883333
-         performance ==> 158.57363707267197
-
-
-         total is 5
-         file length: 17367391
-         average parsing time ==> 111.1
-         performance ==> 149.2147273845501
+     VM options: -server -Xms128m
      */
     public static void main(String[] args) {
         test("address-small.xml");
@@ -95,10 +76,13 @@ public class FastXmlPerfTest {
                 long l2 = System.currentTimeMillis();
                 lt = lt + (l2 - a);
             }
-            System.out.println(" average parsing time ==> "+
-                    ((float)(lt)/total/10));
-            System.out.println(" performance ==> "+
-                    ( ((double)fl *1000 * total)/((lt/10)*(1<<20))) + "\n\n");
+            StringBuilder sb = new StringBuilder();
+            sb.append("| **FastXml** | ");
+            sb.append((float)(lt)/total/10); // average parsing time
+            sb.append(" | ");
+            sb.append(((double)fl *1000 * total)/((lt/10)*(1<<20))); // performance
+            sb.append(" |");
+            System.out.println(sb.toString());
 
         } catch (Exception e) {
             System.out.println("exception ==> " + e);

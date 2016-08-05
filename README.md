@@ -26,32 +26,32 @@ all benchmark test use following vm options:
 ## Performance
 _Performance = (fileLength *1000 * total)/((totalTime/10) * (1<<20)))_
 
-**Parse 1515 bytes file 40000 times**
+**Parse 1565 bytes file 40000 times**
 
-| Xml Parser                        | Average parsing time(ms) | Performance |
-| --------------------------------- | ------------------------:| -----------:|
-| javax.xml.parsers.DocumentBuilder | 0.0287600                | 50.25       |
-| VTD-XML                           | 0.0149875                | 96.48       |
-| XmlPull                           | 0.0125675                | 115.12      |
-| **FastXml**                       | 0.0095350                | 151.69      |
+| Xml Parser                        | Average parsing time(ms) | Performance       |
+| --------------------------------- | ------------------------:| -----------------:|
+| javax.xml.parsers.DocumentBuilder | 0.030252501              | 49.33885306366219 |
+| VTD-XML                           | 0.0150150                | 99.50             |
+| XmlPull                           | 0.0125525                | 118.92432710563995|
+| **FastXml**                       | 0.0066974997             | 223.5955513371957 |
 
 **Parse 41292 bytes file 1200 times**
 
 | Xml Parser                        | Average parsing time(ms) | Performance |
-| --------------------------------- | ------------------------:| -----------:|
-| javax.xml.parsers.DocumentBuilder | 0.52091664               | 75.61       |
-| VTD-XML                           | 0.38441667               | 102.51      |
-| XmlPull                           | 0.31741667               | 124.36      |
-| **FastXml**                       | 0.24883333               | 158.57      |
+| --------------------------------- | ------------------------:| -----------------:|
+| javax.xml.parsers.DocumentBuilder | 0.55083334               | 73.46379774962179 |
+| VTD-XML                           | 0.40008336               | 101.17            |
+| XmlPull                           | 0.33458334               | 121.09618531795512|
+| **FastXml**                       | 0.17175                  | 235.72606947815535|
 
 **Parse 17367391 bytes file 5 times**
 
-| Xml Parser                        | Average parsing time(ms) | Performance |
-| --------------------------------- | ------------------------:| -----------:|
-| javax.xml.parsers.DocumentBuilder | 316.12                   | 52.41       |
-| VTD-XML                           | 171.72                   | 96.52       |
-| XmlPull                           | 143.96                   | 115.18      |
-| **FastXml**                       | 111.10                   | 149.21      |
+| Xml Parser                        | Average parsing time(ms) | Performance        |
+| --------------------------------- | ------------------------:| ------------------:|
+| javax.xml.parsers.DocumentBuilder | 313.7                    | 54.37601281672108  |
+| VTD-XML                           | 185.02                   | 92.17              |
+| XmlPull                           | 161.88                   | 105.39133262870044 |
+| **FastXml**                       | 74.62                    | 228.58334610353526 |
 
 
 ## Memory

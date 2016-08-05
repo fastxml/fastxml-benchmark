@@ -17,26 +17,7 @@ import java.io.IOException;
 public class DomPerfTest {
 
     /**
-     VM options:
-        -server -Xms128m
-
-     OUTPUT:
-         total is 40000
-         file length: 1515
-         average parsing time ==> 0.028760001
-         performance ==> 50.25449006453805
-
-
-         total is 1200
-         file length: 41292
-         average parsing time ==> 0.52091664
-         performance ==> 75.60791015625
-
-
-         total is 5
-         file length: 17367391
-         average parsing time ==> 316.12
-         performance ==> 52.414033986345125
+     VM options: -server -Xms128m
      */
     public static void main(String[] args) {
         test("address-small.xml");
@@ -93,10 +74,13 @@ public class DomPerfTest {
                 long l2 = System.currentTimeMillis();
                 lt = lt + (l2 - a);
             }
-            System.out.println(" average parsing time ==> "+
-                    ((float)(lt)/total/10));
-            System.out.println(" performance ==> "+
-                    ( ((double)fl *1000 * total)/((lt/10)*(1<<20))) + "\n\n");
+            StringBuilder sb = new StringBuilder();
+            sb.append("| javax.xml.parsers.DocumentBuilder | ");
+            sb.append((float)(lt)/total/10); // average parsing time
+            sb.append(" | ");
+            sb.append(((double)fl *1000 * total)/((lt/10)*(1<<20))); // performance
+            sb.append(" |");
+            System.out.println(sb.toString());
 
         } catch (Exception e) {
             System.out.println("exception ==> " + e);
