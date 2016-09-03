@@ -4,7 +4,7 @@
 
   <groupId>com.github.fastxml</groupId>
   <artifactId>fastxml-benchmark</artifactId>
-  <version>1.0.0</version>
+  <version>1.1.0.beta</version>
   <packaging>jar</packaging>
 
   <name>fastxml-benchmark</name>
@@ -18,7 +18,7 @@
     <dependency>
       <groupId>com.github.fastxml</groupId>
       <artifactId>fastxml</artifactId>
-      <version>1.0.0</version>
+      <version>1.1.0.beta</version>
     </dependency>
     <!-- https://mvnrepository.com/artifact/com.ximpleware/vtd-xml -->
     <dependency>

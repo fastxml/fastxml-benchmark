@@ -8,10 +8,12 @@ import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import com.github.fastxml.exception.NumberFormatException;
 import com.github.fastxml.exception.ParseException;
 
+import java.io.ByteArrayInputStream;
+
 /**
  * Created by weager on 2016/07/07.
  */
-public class FastXmlPerfTest {
+public class FastXmlPerfTest4InputStream {
 
     private final static byte[] database = "database".getBytes();
     private final static byte[] person = "person".getBytes();
@@ -63,14 +65,16 @@ public class FastXmlPerfTest {
                 total = 5;
             System.out.println("total is " + total);
             System.out.println("file length: " + fl);
-            parseXml2PersionObject(ba);
+
+            ByteArrayInputStream bais = new ByteArrayInputStream(ba);
+            parseXml2PersionObject(bais);
 
             long lt = 0;
             for (int j = 0;j<10;j++){
                 long a = System.currentTimeMillis();
                 for(int i=0;i<total;i++)
                 {
-                    parseXml2PersionObject(ba);
+                    parseXml2PersionObject(bais);
                 }
                 long l2 = System.currentTimeMillis();
                 lt = lt + (l2 - a);
@@ -88,8 +92,9 @@ public class FastXmlPerfTest {
         }
     }
 
-    public static void parseXml2PersionObject(byte[] ba) throws ParseException, NumberFormatException {
-        FastXmlParser parser = FastXmlFactory.newInstance(ba);
+    public static void parseXml2PersionObject(ByteArrayInputStream bais) throws ParseException, NumberFormatException {
+        bais.reset();
+        FastXmlParser parser = FastXmlFactory.newInstance(bais);
         int event = 0;
         if (parser.next() == FastXmlParser.START_DOCUMENT && parser.next() == FastXmlParser.START_TAG && parser.isMatch(database)) {
             Person p = new Person();
