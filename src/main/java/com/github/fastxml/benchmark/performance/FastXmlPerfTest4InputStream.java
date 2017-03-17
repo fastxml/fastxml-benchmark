@@ -4,7 +4,6 @@ import com.github.fastxml.FastXmlFactory;
 import com.github.fastxml.FastXmlParser;
 import com.github.fastxml.benchmark.Debug;
 import com.github.fastxml.benchmark.model.Person;
-import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import com.github.fastxml.exception.NumberFormatException;
 import com.github.fastxml.exception.ParseException;
 
@@ -13,58 +12,25 @@ import java.io.ByteArrayInputStream;
 /**
  * Created by weager on 2016/07/07.
  */
-public class FastXmlPerfTest4InputStream {
+public class FastXmlPerfTest4InputStream extends PerfTestSupport implements PerfTest {
 
-    private final static byte[] database = "database".getBytes();
-    private final static byte[] person = "person".getBytes();
-    private final static byte[] id = "id".getBytes();
-    private final static byte[] name = "name".getBytes();
-    private final static byte[] email = "email".getBytes();
-    private final static byte[] phone = "phone".getBytes();
-    private final static byte[] address = "address".getBytes();
-    private final static byte[] city = "city".getBytes();
-    private final static byte[] state = "state".getBytes();
-    private final static byte[] zip = "zip".getBytes();
-    private final static byte[] country = "country".getBytes();
-    private final static byte[] line1 = "line1".getBytes();
-    private final static byte[] line2 = "line2".getBytes();
+    private final byte[] database = "database".getBytes();
+    private final byte[] person = "person".getBytes();
+    private final byte[] id = "id".getBytes();
+    private final byte[] name = "name".getBytes();
+    private final byte[] email = "email".getBytes();
+    private final byte[] phone = "phone".getBytes();
+    private final byte[] address = "address".getBytes();
+    private final byte[] city = "city".getBytes();
+    private final byte[] state = "state".getBytes();
+    private final byte[] zip = "zip".getBytes();
+    private final byte[] country = "country".getBytes();
+    private final byte[] line1 = "line1".getBytes();
+    private final byte[] line2 = "line2".getBytes();
 
-    /**
-     VM options: -server -Xms128m
-     */
-    public static void main(String[] args) {
-        test("address-small.xml");
-        test("address-middle.xml");
-        test("address-big.xml");
-    }
-    public static void test(String fileName){
+
+    public long test(byte[] ba, int totalNumber, int fileLength) {
         try {
-            byte[] ba = FileLoaderUtils.loadClasspathFile(fileName);
-            int fl = ba.length;
-
-            int total;
-            if (fl < 1000)
-                total = 80000;
-            else if (fl < 3000)
-                total = 40000;
-            else if (fl < 6000)
-                total = 8000;
-            else if (fl < 15000)
-                total = 3200;
-            else if (fl < 30000)
-                total = 2000;
-            else if (fl < 60000)
-                total = 1200;
-            else if (fl < 120000)
-                total = 300;
-            else if (fl < 500000)
-                total = 100;
-            else if (fl < 2000000)
-                total = 40;
-            else
-                total = 5;
-            System.out.println("total is " + total);
-            System.out.println("file length: " + fl);
 
             ByteArrayInputStream bais = new ByteArrayInputStream(ba);
             parseXml2PersionObject(bais);
@@ -72,27 +38,22 @@ public class FastXmlPerfTest4InputStream {
             long lt = 0;
             for (int j = 0;j<10;j++){
                 long a = System.currentTimeMillis();
-                for(int i=0;i<total;i++)
+                for (int i = 0; i < totalNumber; i++)
                 {
                     parseXml2PersionObject(bais);
                 }
                 long l2 = System.currentTimeMillis();
                 lt = lt + (l2 - a);
             }
-            StringBuilder sb = new StringBuilder();
-            sb.append("| **FastXml** | ");
-            sb.append((float)(lt)/total/10); // average parsing time
-            sb.append(" | ");
-            sb.append(((double)fl *1000 * total)/((lt/10)*(1<<20))); // performance
-            sb.append(" |");
-            System.out.println(sb.toString());
+            return lt;
 
         } catch (Exception e) {
             System.out.println("exception ==> " + e);
         }
+        return 0L;
     }
 
-    public static void parseXml2PersionObject(ByteArrayInputStream bais) throws ParseException, NumberFormatException {
+    public void parseXml2PersionObject(ByteArrayInputStream bais) throws ParseException, NumberFormatException {
         bais.reset();
         FastXmlParser parser = FastXmlFactory.newInstance(bais);
         int event = 0;
@@ -160,5 +121,7 @@ public class FastXmlPerfTest4InputStream {
         }
     }
 
-
+    public String getCaseName() {
+        return "***FastXml***(for huge files)";
+    }
 }

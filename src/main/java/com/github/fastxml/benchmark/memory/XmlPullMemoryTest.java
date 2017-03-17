@@ -21,10 +21,10 @@ public class XmlPullMemoryTest {
         -server -Xms128m
 
      OUTPUT:
-         file length: 17367391
-         Memory Use: 35.03701 MB.
-         Multiplying factor: 2.1153994
-         Time Use: 370
+     file length: 17880651
+     Memory Use: 41.592308 MB.
+     Multiplying factor: 2.4390998
+     Time Use: 412
      */
     public static void main(String[] args) {
         try {
@@ -46,6 +46,8 @@ public class XmlPullMemoryTest {
             parseXml2PersionObject(xpp, bais);
 
             long endMem = rt.totalMemory() - rt.freeMemory();
+            System.out.println(startMem);
+            System.out.println(endMem);
             System.out.println("Memory Use: " + ((float)endMem - startMem)/(1<<20) + " MB.");
             System.out.println("Multiplying factor: " + ((float) endMem - startMem)/length );
             System.out.println("Time Use: " + (System.currentTimeMillis() - startTime));

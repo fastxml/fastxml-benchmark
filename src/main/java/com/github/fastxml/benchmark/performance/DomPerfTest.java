@@ -2,7 +2,6 @@ package com.github.fastxml.benchmark.performance;
 
 import com.github.fastxml.benchmark.Debug;
 import com.github.fastxml.benchmark.model.Person;
-import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -14,45 +13,10 @@ import java.io.IOException;
 /**
  * Created by weager on 2016/07/07.
  */
-public class DomPerfTest {
+public class DomPerfTest extends PerfTestSupport implements PerfTest {
 
-    /**
-     VM options: -server -Xms128m
-     */
-    public static void main(String[] args) {
-        test("address-small.xml");
-        test("address-middle.xml");
-        test("address-big.xml");
-    }
-    public static void test(String fileName){
+    public long test(byte[] ba, int totalNumber, int fileLength) {
         try {
-            byte[] ba = FileLoaderUtils.loadClasspathFile(fileName);
-            int fl = ba.length;
-
-            int total;
-            if (fl < 1000)
-                total = 80000;
-            else if (fl < 3000)
-                total = 40000;
-            else if (fl < 6000)
-                total = 8000;
-            else if (fl < 15000)
-                total = 3200;
-            else if (fl < 30000)
-                total = 2000;
-            else if (fl < 60000)
-                total = 1200;
-            else if (fl < 120000)
-                total = 300;
-            else if (fl < 500000)
-                total = 100;
-            else if (fl < 2000000)
-                total = 40;
-            else
-                total = 5;
-            System.out.println("total is " + total);
-            System.out.println("file length: " + fl);
-
             DocumentBuilderFactory factory =
                     DocumentBuilderFactory.newInstance();
             factory.setNamespaceAware(false);
@@ -67,27 +31,21 @@ public class DomPerfTest {
             long lt = 0;
             for (int j = 0;j<10;j++){
                 long a = System.currentTimeMillis();
-                for(int i=0;i<total;i++)
+                for (int i = 0; i < totalNumber; i++)
                 {
                     parseXml2PersionObject(parser, bais);
                 }
                 long l2 = System.currentTimeMillis();
                 lt = lt + (l2 - a);
             }
-            StringBuilder sb = new StringBuilder();
-            sb.append("| javax.xml.parsers.DocumentBuilder | ");
-            sb.append((float)(lt)/total/10); // average parsing time
-            sb.append(" | ");
-            sb.append(((double)fl *1000 * total)/((lt/10)*(1<<20))); // performance
-            sb.append(" |");
-            System.out.println(sb.toString());
-
+            return lt;
         } catch (Exception e) {
             System.out.println("exception ==> " + e);
         }
+        return 0L;
     }
 
-    public static  void parseXml2PersionObject(DocumentBuilder parser, ByteArrayInputStream bais) throws IOException, SAXException {
+    public void parseXml2PersionObject(DocumentBuilder parser, ByteArrayInputStream bais) throws IOException, SAXException {
         bais.reset();
         Document doc = parser.parse(bais);
 
@@ -180,5 +138,9 @@ public class DomPerfTest {
                 }
             }
         }
+    }
+
+    public String getCaseName() {
+        return "javax.xml.parsers.DocumentBuilder";
     }
 }

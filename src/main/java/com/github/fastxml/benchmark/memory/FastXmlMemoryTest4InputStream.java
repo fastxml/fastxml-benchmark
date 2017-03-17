@@ -6,10 +6,12 @@ import com.github.fastxml.benchmark.Debug;
 import com.github.fastxml.benchmark.model.Person;
 import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 
+import java.io.InputStream;
+
 /**
  * Created by weager on 2016/07/07.
  */
-public class FastXmlMemoryTest {
+public class FastXmlMemoryTest4InputStream {
     private final static byte[] database = "database".getBytes();
     private final static byte[] person = "person".getBytes();
     private final static byte[] id = "id".getBytes();
@@ -26,38 +28,32 @@ public class FastXmlMemoryTest {
     static Runtime rt;
 
     /**
-     VM options:
-        -server -Xms128m
-
-     OUTPUT:
-     file length: 17880651
-     Memory Use: 51.122025 MB.
-     Multiplying factor: 2.9979515
-     Time Use: 266
+     * VM options:
+     * -server -Xms128m
+     * <p>
+     * OUTPUT:
+     * file length: 17880651
+     * Memory Use: 17.001877 MB.
+     * Multiplying factor: 0.99704194
+     * Time Use: 333
      */
     public static void main(String[] args) {
         try {
             rt = Runtime.getRuntime();
-            byte[] ba = FileLoaderUtils.loadClasspathFile("address-big.xml");
-            int length = ba.length;
+            InputStream inputStream = FileLoaderUtils.getInputStream("address-big.xml");
+            int length = inputStream.available();
             System.out.println("file length: " + length);
             long startMem = rt.totalMemory() - rt.freeMemory();
             long startTime = System.currentTimeMillis();
-            FastXmlParser parser = FastXmlFactory.newInstance(ba);
-            int count = 0;
+            FastXmlParser parser = FastXmlFactory.newInstance(inputStream);
             if (parser.next() == FastXmlParser.START_DOCUMENT && parser.next() == FastXmlParser.START_TAG && parser.isMatch(database)) {
                 Person p = new Person();
                 while (parser.next() == FastXmlParser.START_TAG && parser.isMatch(person)) {
-                    count++;
-                    if (count == 100) {
-                        count = 0;
-                        System.out.println(rt.totalMemory() - rt.freeMemory());
-                    }
                     if (parser.next() == FastXmlParser.ATTRIBUTE_NAME && parser.isMatch(id) && parser.next() == FastXmlParser.ATTRIBUTE_VALUE) {
                         p.setId(parser.getLong());
                     }
                     if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(name) && parser.next() == FastXmlParser.TEXT) {
-//                        p.setName(parser.getStringWithDecoding());
+                        p.setName(parser.getStringWithDecoding());
                         parser.next();
                     }
                     if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(email) && parser.next() == FastXmlParser.TEXT) {
@@ -87,7 +83,7 @@ public class FastXmlMemoryTest {
                         }
                         if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(line1)) {
                             parser.next();
-//                            p.setLine1(parser.getStringWithDecoding());
+                            p.setLine1(parser.getStringWithDecoding());
                             parser.next();
                         }
                         if (parser.next() == FastXmlParser.START_TAG && parser.isMatch(line2)) {
@@ -98,7 +94,7 @@ public class FastXmlMemoryTest {
                         parser.next();
                     }
                     parser.next();
-                    if(Debug.printInfo) {
+                    if (Debug.printInfo) {
                         System.out.println("id: " + p.getId());
                         System.out.println("name: " + p.getName());
                         System.out.println("email: " + p.getEmail());
@@ -115,8 +111,6 @@ public class FastXmlMemoryTest {
 
             // do nothing!
             long endMem = rt.totalMemory() - rt.freeMemory();
-            System.out.println(startMem);
-            System.out.println(endMem);
             System.out.println("Memory Use: " + ((float) endMem - startMem) / (1 << 20) + " MB.");
             System.out.println("Multiplying factor: " + ((float) endMem - startMem) / length);
             System.out.println("Time Use: " + (System.currentTimeMillis() - startTime));
@@ -124,5 +118,4 @@ public class FastXmlMemoryTest {
             System.out.println("exception ==> " + e);
         }
     }
-
 }

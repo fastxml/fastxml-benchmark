@@ -20,10 +20,10 @@ public class DomMemoryTest{
         -server -Xms128m
 
      OUTPUT:
-         file length: 17367391
-         Memory Use: 144.77722 MB.
-         Multiplying factor: 8.741089
-         Time Use: 1050
+     file length: 17880651
+     Memory Use: 164.83444 MB.
+     Multiplying factor: 9.666395
+     Time Use: 1336
      */
     public static void main(String[] args) {
         try {

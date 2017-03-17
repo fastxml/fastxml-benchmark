@@ -2,11 +2,11 @@ package com.github.fastxml.benchmark.memory;
 
 import com.github.fastxml.benchmark.Debug;
 import com.github.fastxml.benchmark.model.Person;
+import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 import com.ximpleware.NavException;
 import com.ximpleware.ParseException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
-import com.github.fastxml.benchmark.utils.FileLoaderUtils;
 
 import java.io.IOException;
 
@@ -21,10 +21,10 @@ public class VTDMemoryTest {
         -server -Xms128m
 
      OUTPUT:
-         file length: 17367391
-         Memory Use: 32.230522 MB.
-         Multiplying factor: 1.9459543
-         Time Use: 651
+     file length: 17880651
+     Memory Use: 49.384636 MB.
+     Multiplying factor: 2.8960657
+     Time Use: 768
      */
     public static void main(String[] args) throws NavException {
         try{
